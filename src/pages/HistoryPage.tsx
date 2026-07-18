@@ -38,7 +38,7 @@ function GameCard({ game }: { game: GameRead }) {
           {!isFinished && (
             <button
               onClick={() => navigate(`/games/${game.id}`)}
-              className="rounded-lg bg-uno-red px-3 py-1.5 text-xs font-semibold text-white hover:opacity-90"
+              className="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:opacity-90"
             >
               Resume
             </button>
@@ -103,7 +103,7 @@ export function HistoryPage() {
         <h2 className="text-xl font-semibold">History</h2>
         <button
           onClick={() => navigate('/')}
-          className="rounded-lg bg-uno-red px-4 py-1.5 text-sm font-semibold text-white hover:opacity-90"
+          className="rounded-lg bg-red-600 px-4 py-1.5 text-sm font-semibold text-white hover:opacity-90"
         >
           + New
         </button>

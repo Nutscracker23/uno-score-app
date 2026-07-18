@@ -42,7 +42,7 @@ function PlayerSelector({
                                 onClick={() => toggle(p.id)}
                                 className={`rounded-full px-3 py-1 text-sm transition-colors ${
                                     selected.includes(p.id)
-                                        ? 'bg-uno-red text-white'
+                                        ? 'bg-red-600 text-white'
                                         : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
                                 }`}
                             >
@@ -60,7 +60,7 @@ function PlayerSelector({
                     onChange={(e) => setNewName(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
                     placeholder="New player name"
-                    className="flex-1 rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-sm text-white placeholder-slate-400 focus:border-uno-red focus:outline-none"
+                    className="flex-1 rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-sm text-white placeholder-slate-400 focus:border-red-600 focus:outline-none"
                 />
                 <button
                     onClick={handleCreate}
@@ -81,7 +81,7 @@ function PlayerSelector({
                             return (
                                 <span
                                     key={id}
-                                    className="flex items-center gap-1 rounded-full bg-uno-red/20 px-3 py-1 text-sm text-uno-red"
+                                    className="flex items-center gap-1 rounded-full bg-red-600/20 px-3 py-1 text-sm text-red-600"
                                 >
                   {player?.name ?? id}
                                     <button
@@ -117,7 +117,7 @@ function PartyQuickSelect({
         <div>
             <button
                 onClick={() => setOpen((v) => !v)}
-                className="text-sm text-uno-red hover:underline"
+                className="text-sm text-red-600 hover:underline"
             >
                 {open ? 'Hide parties' : '⚡ Quick select from party'}
             </button>
@@ -177,7 +177,7 @@ export function HomePage() {
                     step={100}
                     value={targetScore}
                     onChange={(e) => setTargetScore(Number(e.target.value))}
-                    className="w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-white focus:border-uno-red focus:outline-none"
+                    className="w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-white focus:border-red-600 focus:outline-none"
                 />
             </div>
             <div
@@ -189,7 +189,7 @@ export function HomePage() {
                     aria-checked={continueAfterTarget}
                     onClick={() => setContinueAfterTarget((v) => !v)}
                     className={`relative h-6 w-11 flex-shrink-0 rounded-full transition-colors ${
-                        continueAfterTarget ? 'bg-uno-red' : 'bg-slate-600'
+                        continueAfterTarget ? 'bg-red-600' : 'bg-slate-600'
                     }`}
                 >
     <span
@@ -213,7 +213,7 @@ export function HomePage() {
             <button
                 onClick={handleStart}
                 disabled={playerIds.length < 2 || createGame.isPending}
-                className="w-full rounded-lg bg-uno-red py-3 font-semibold text-white hover:opacity-90 disabled:opacity-50"
+                className="w-full rounded-lg bg-red-600 py-3 font-semibold text-white hover:opacity-90 disabled:opacity-50"
             >
                 {createGame.isPending ? 'Starting…' : `Start game · ${playerIds.length} players`}
             </button>

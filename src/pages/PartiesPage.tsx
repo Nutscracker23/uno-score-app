@@ -39,7 +39,7 @@ function PlayerSelector({
               onClick={() => toggle(p.id)}
               className={`flex items-center gap-1 rounded-full px-3 py-1 text-sm transition-colors ${
                 selected.includes(p.id)
-                  ? 'bg-uno-red text-white'
+                  ? 'bg-red-600 text-white'
                   : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
               }`}
             >
@@ -67,7 +67,7 @@ function PlayerSelector({
           onChange={(e) => setNewName(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
           placeholder="New player name"
-          className="flex-1 rounded-lg border border-slate-600 bg-slate-700 px-3 py-1.5 text-sm text-white placeholder-slate-400 focus:border-uno-red focus:outline-none"
+          className="flex-1 rounded-lg border border-slate-600 bg-slate-700 px-3 py-1.5 text-sm text-white placeholder-slate-400 focus:border-red-600 focus:outline-none"
         />
         <button
           onClick={handleCreate}
@@ -106,7 +106,7 @@ function CreatePartyForm({ onClose }: { onClose: () => void }) {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Friday crew"
-          className="w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-white placeholder-slate-400 focus:border-uno-red focus:outline-none"
+          className="w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-white placeholder-slate-400 focus:border-red-600 focus:outline-none"
         />
       </div>
 
@@ -125,7 +125,7 @@ function CreatePartyForm({ onClose }: { onClose: () => void }) {
         <button
           onClick={handleCreate}
           disabled={!name.trim() || createParty.isPending}
-          className="flex-1 rounded-lg bg-uno-red py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
+          className="flex-1 rounded-lg bg-red-600 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
         >
           {createParty.isPending ? 'Creating…' : 'Create'}
         </button>
@@ -155,7 +155,7 @@ function EditPartyForm({ party, onClose }: { party: Party; onClose: () => void }
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-white focus:border-uno-red focus:outline-none"
+          className="w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-white focus:border-red-600 focus:outline-none"
         />
       </div>
 
@@ -174,7 +174,7 @@ function EditPartyForm({ party, onClose }: { party: Party; onClose: () => void }
         <button
           onClick={handleSave}
           disabled={!name.trim() || updateParty.isPending}
-          className="flex-1 rounded-lg bg-uno-red py-1.5 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
+          className="flex-1 rounded-lg bg-red-600 py-1.5 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
         >
           {updateParty.isPending ? 'Saving…' : 'Save'}
         </button>
@@ -253,7 +253,7 @@ export function PartiesPage() {
         {!creating && (
           <button
             onClick={() => setCreating(true)}
-            className="rounded-lg bg-uno-red px-4 py-1.5 text-sm font-semibold text-white hover:opacity-90"
+            className="rounded-lg bg-red-600 px-4 py-1.5 text-sm font-semibold text-white hover:opacity-90"
           >
             + New
           </button>
