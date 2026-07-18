@@ -50,7 +50,7 @@ export function LoginPage() {
     return (
         <div className="flex min-h-screen items-center justify-center bg-slate-900 px-4">
             <div className="w-full max-w-sm">
-                <h1 className="mb-8 text-center text-3xl font-bold text-red-600">🃏 UnoScore</h1>
+                <h1 className="mb-8 text-center text-3xl font-bold text-uno-red">🃏 UnoScore</h1>
 
                 <div className="rounded-2xl border border-slate-700 bg-slate-800 p-6">
                     <h2 className="mb-2 text-xl font-semibold">Sign in</h2>

@@ -22,7 +22,7 @@ export function AppLayout() {
     <div className="min-h-screen bg-slate-900 text-white">
       <header className="sticky top-0 z-10 border-b border-slate-800 bg-slate-900/95 backdrop-blur">
         <div className="mx-auto flex max-w-md items-center justify-between px-4 py-3">
-          <Link to="/" className="text-lg font-bold text-red-600">
+          <Link to="/" className="text-lg font-bold text-uno-red">
             🃏 Uno
           </Link>
           <nav className="flex items-center gap-4">
