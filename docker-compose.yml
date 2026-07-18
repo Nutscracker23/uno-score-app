@@ -1,0 +1,22 @@
+name: uno-score-app
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+#    environment:
+#      VITE_API_URL: http://localhost:8000
+    restart: no
+    networks:
+      - uno-score
+
+networks:
+  uno-score:
+    name: uno-score
+    external: true
