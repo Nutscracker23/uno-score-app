@@ -2,7 +2,6 @@ import { apiClient, API_PREFIX } from './client'
 import type { User } from '@/types'
 
 export const authApi = {
-  /** Full URL that kicks off the OAuth login redirect for a provider. */
   oauthLoginUrl: (provider: string): string =>
     `${API_PREFIX}/oauth/login/${provider}`,
 

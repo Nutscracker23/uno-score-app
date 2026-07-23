@@ -3,7 +3,6 @@ import {useParams, useNavigate} from 'react-router-dom'
 import type {Round, Standing} from '@/types'
 import {useGame, useAddRound, useUpdateRound, useDeleteRound, useFinishGame, useUpdateGame} from '@/hooks/useGames'
 
-// ─── Standings Table ──────────────────────────────────────────────────────────
 
 function StandingsTable({
                             standings,
@@ -50,7 +49,6 @@ function StandingsTable({
     )
 }
 
-// ─── Add Round Form ───────────────────────────────────────────────────────────
 
 function AddRoundForm({
                           gameId,
@@ -122,7 +120,6 @@ function AddRoundForm({
     )
 }
 
-// ─── Round Row ────────────────────────────────────────────────────────────────
 
 function RoundRow({
                       round,
@@ -215,7 +212,6 @@ function RoundRow({
     )
 }
 
-// ─── Rounds History ───────────────────────────────────────────────────────────
 
 function RoundsHistory({
                            rounds,
@@ -256,7 +252,6 @@ function RoundsHistory({
     )
 }
 
-// ─── Winner Banner ────────────────────────────────────────────────────────────
 
 function WinnerBanner({standings, winnerId}: { standings: Standing[]; winnerId: string }) {
     const winner = standings.find((s) => s.player_id === winnerId)
@@ -271,7 +266,6 @@ function WinnerBanner({standings, winnerId}: { standings: Standing[]; winnerId: 
     )
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export function GameDetailPage() {
     const {id} = useParams<{ id: string }>()

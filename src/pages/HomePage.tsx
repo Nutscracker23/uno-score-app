@@ -5,7 +5,6 @@ import {usePlayers, useCreatePlayer} from '@/hooks/usePlayers'
 import {useCreateGame} from '@/hooks/useGames'
 import type {Party, Player} from '@/types'
 
-// ─── Player Selector ──────────────────────────────────────────────────────────
 
 function PlayerSelector({
                             selected,
@@ -100,7 +99,6 @@ function PlayerSelector({
     )
 }
 
-// ─── Party Quick Select ───────────────────────────────────────────────────────
 
 function PartyQuickSelect({
                               parties,
@@ -145,7 +143,6 @@ function PartyQuickSelect({
     )
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export function HomePage() {
     const navigate = useNavigate()

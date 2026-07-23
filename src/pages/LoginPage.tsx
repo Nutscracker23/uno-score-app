@@ -1,11 +1,11 @@
 import {Navigate} from 'react-router-dom'
-import { useNavigate } from "react-router";
+import {useNavigate} from "react-router";
 import {authApi} from '@/api/auth'
 import {useAuthStore} from '@/store/authStore'
 
 export function LoginPage() {
     const {isAuthenticated} = useAuthStore()
-    const { setAuth } = useAuthStore()
+    const {setAuth} = useAuthStore()
     const navigate = useNavigate();
 
     if (isAuthenticated) {
