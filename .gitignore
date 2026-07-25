@@ -5,3 +5,4 @@ dist
 dev-dist
 .idea
 .ai
+.nvmrc
