@@ -1,10 +1,14 @@
-import { defineConfig } from 'vite'
+import {defineConfig, loadEnv} from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import tailwindcss from '@tailwindcss/vite'
 
-export default defineConfig({
-  plugins: [
+
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd())
+
+  return {
+    plugins: [
     react(),
     tailwindcss(),
     VitePWA({
@@ -35,7 +39,7 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/your-api\.fly\.dev\/api\//,
+            urlPattern: new RegExp(`^${env.VITE_API_URL}/api/`),
             handler: 'NetworkFirst',
             options: {
               cacheName: 'api-cache',
@@ -54,4 +58,4 @@ export default defineConfig({
       '@': '/src',
     },
   },
-})
+}})
