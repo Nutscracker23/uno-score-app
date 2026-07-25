@@ -170,6 +170,7 @@ export function HomePage() {
                 <label className="mb-1 block text-sm text-slate-400">Target score</label>
                 <input
                     type="number"
+                    inputMode="numeric"
                     min={100}
                     step={100}
                     value={targetScore}

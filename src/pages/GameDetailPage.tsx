@@ -101,6 +101,7 @@ function AddRoundForm({
                 <label className="mb-1 block text-sm text-slate-400">Score collected</label>
                 <input
                     type="number"
+                    inputMode="numeric"
                     min={0}
                     value={score}
                     onChange={(e) => setScore(e.target.value)}
@@ -165,6 +166,7 @@ function RoundRow({
                 </div>
                 <input
                     type="number"
+                    inputMode="numeric"
                     value={score}
                     onChange={(e) => setScore(e.target.value)}
                     className="w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-1.5 text-center font-mono text-white focus:border-uno-red focus:outline-none"
