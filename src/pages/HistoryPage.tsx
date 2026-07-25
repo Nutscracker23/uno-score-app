@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router'
 import {useGames, useDeleteGame} from '@/hooks/useGames'
 import type {GameRead} from '@/types'
 

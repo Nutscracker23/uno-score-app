@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router'
 import {useParties} from '@/hooks/useParties'
 import {usePlayers, useCreatePlayer} from '@/hooks/usePlayers'
 import {useCreateGame} from '@/hooks/useGames'

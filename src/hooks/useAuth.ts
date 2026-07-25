@@ -1,4 +1,4 @@
-import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router'
 import {useAuthStore} from '@/store/authStore'
 import {apiClient} from '@/api/client'
 import {authApi} from "@/api/auth.ts";

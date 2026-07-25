@@ -1,5 +1,4 @@
-import {Navigate} from 'react-router-dom'
-import {useNavigate} from "react-router";
+import {Navigate, useNavigate} from 'react-router'
 import {authApi} from '@/api/auth'
 import {useAuthStore} from '@/store/authStore'
 

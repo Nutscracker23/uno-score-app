@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {useParams, useNavigate} from 'react-router-dom'
+import {useParams, useNavigate} from 'react-router'
 import type {Round, Standing} from '@/types'
 import {useGame, useAddRound, useUpdateRound, useDeleteRound, useFinishGame, useUpdateGame} from '@/hooks/useGames'
 
