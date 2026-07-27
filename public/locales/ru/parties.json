@@ -1,0 +1,11 @@
+{
+  "title": "Пати",
+  "newParty": "Новое пати",
+  "partyName": "Название пати",
+  "noParties": "Пока нет пати",
+  "players": "Игроки",
+  "playersCount_one": "{{count}} игрок",
+  "playersCount_few": "{{count}} игрока",
+  "playersCount_many": "{{count}} игроков",
+  "newPlayerName": "Имя нового игрока"
+}

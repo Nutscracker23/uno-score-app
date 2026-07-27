@@ -12,48 +12,48 @@ import {useRefresh} from "@/hooks/useAuth.ts";
 import {ReactNode} from "react";
 
 const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            retry: 1,
-            staleTime: 1000 * 60,
-        },
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      staleTime: 1000 * 60,
     },
+  },
 })
 
 function AppBootstrap({children}: { children: ReactNode }) {
-    const location = useLocation()
-    const isLoginPage = location.pathname === '/login'
-    const {isPending} = useRefresh()
-    if (!isLoginPage && isPending) return (
-        <div className="flex min-h-screen items-center justify-center bg-slate-900">
-            <p className="text-slate-400">Loading…</p>
-        </div>
-    )
-    return <>{children}</>
+  const location = useLocation()
+  const isLoginPage = location.pathname === '/login'
+  const {isPending} = useRefresh()
+  if (!isLoginPage && isPending) return (
+    <div className="flex min-h-screen items-center justify-center bg-slate-900">
+      <p className="text-slate-400">Loading…</p>
+    </div>
+  )
+  return <>{children}</>
 }
 
 export function App() {
-    return (
-        <QueryClientProvider client={queryClient}>
-            <BrowserRouter>
-                <AppBootstrap>
-                    <Routes>
-                        {/* Public */}
-                        <Route path="/login" element={<LoginPage/>}/>
+  return (
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <AppBootstrap>
+          <Routes>
+            {/* Public */}
+            <Route path="/login" element={<LoginPage/>}/>
 
-                        {/* Protected */}
-                        <Route element={<ProtectedRoute/>}>
-                            <Route element={<AppLayout/>}>
-                                <Route path="/" element={<HomePage/>}/>
-                                <Route path="/games/:id" element={<GameDetailPage/>}/>
-                                <Route path="/history" element={<HistoryPage/>}/>
-                                <Route path="/parties" element={<PartiesPage/>}/>
-                            </Route>
-                        </Route>
-                    </Routes>
-                </AppBootstrap>
-            </BrowserRouter>
-            <ReactQueryDevtools initialIsOpen={false}/>
-        </QueryClientProvider>
-    )
+            {/* Protected */}
+            <Route element={<ProtectedRoute/>}>
+              <Route element={<AppLayout/>}>
+                <Route path="/" element={<HomePage/>}/>
+                <Route path="/games/:id" element={<GameDetailPage/>}/>
+                <Route path="/history" element={<HistoryPage/>}/>
+                <Route path="/parties" element={<PartiesPage/>}/>
+              </Route>
+            </Route>
+          </Routes>
+        </AppBootstrap>
+      </BrowserRouter>
+      <ReactQueryDevtools initialIsOpen={false}/>
+    </QueryClientProvider>
+  )
 }

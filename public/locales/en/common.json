@@ -1,0 +1,19 @@
+{
+  "nav": {
+    "game": "Game",
+    "history": "History",
+    "parties": "Parties"
+  },
+  "actions": {
+    "save": "Save",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "deleteShort": "Delete",
+    "edit": "Edit",
+    "editShort": "Edit",
+    "add": "Add",
+    "loading": "Loading…",
+    "new": "New"
+  }
+}

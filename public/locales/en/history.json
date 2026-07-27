@@ -1,0 +1,16 @@
+{
+  "title": "History",
+  "noGames": "No games yet",
+  "noGamesFiltered": "No {{status}} games",
+  "resume": "Resume",
+  "view": "View",
+  "target": "Target",
+  "confirmDelete": "Delete this game?",
+  "deleting": "Deleting…",
+  "yesDelete": "Yes, delete",
+  "filters": {
+    "all": "All",
+    "active": "Active",
+    "finished": "Finished"
+  }
+}

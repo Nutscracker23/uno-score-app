@@ -1,0 +1,16 @@
+{
+  "title": "История",
+  "noGames": "Игр пока нет",
+  "noGamesFiltered": "Нет игр со статусом {{status}}",
+  "resume": "Продолжить",
+  "view": "Смотреть",
+  "target": "Цель",
+  "confirmDelete": "Удалить эту игру?",
+  "deleting": "Удаление…",
+  "yesDelete": "Да, удалить",
+  "filters": {
+    "all": "Все",
+    "active": "Активные",
+    "finished": "Завершённые"
+  }
+}

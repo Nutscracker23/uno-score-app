@@ -1,0 +1,10 @@
+{
+  "title": "Parties",
+  "newParty": "New party",
+  "partyName": "Party name",
+  "noParties": "No parties yet",
+  "players": "Players",
+  "playersCount_one": "{{count}} player",
+  "playersCount_other": "{{count}} players",
+  "newPlayerName": "New player name"
+}

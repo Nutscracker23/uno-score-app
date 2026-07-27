@@ -1,11 +1,13 @@
-import { Link, Outlet, useLocation } from 'react-router'
-import { useLogout } from '@/hooks/useAuth'
-import { useAuthStore } from '@/store/authStore'
+import {Link, Outlet, useLocation} from 'react-router'
+import {useLogout} from '@/hooks/useAuth'
+import {useAuthStore} from '@/store/authStore'
+import {useTranslation} from "react-i18next";
 
 export function AppLayout() {
-  const { user } = useAuthStore()
+  const {user} = useAuthStore()
   const logout = useLogout()
-  const { pathname } = useLocation()
+  const {pathname} = useLocation()
+  const {t: tNav} = useTranslation('common', {keyPrefix: 'nav'})
 
   const navLink = (to: string, label: string) => (
     <Link
@@ -26,9 +28,9 @@ export function AppLayout() {
             🃏 Uno
           </Link>
           <nav className="flex items-center gap-4">
-            {navLink('/', 'Game')}
-            {navLink('/history', 'History')}
-            {navLink('/parties', 'Parties')}
+            {navLink('/', tNav('game'))}
+            {navLink('/history', tNav('history'))}
+            {navLink('/parties', tNav('parties'))}
             <button
               onClick={logout}
               className="text-sm text-slate-400 hover:text-white"
@@ -40,7 +42,7 @@ export function AppLayout() {
       </header>
 
       <main className="mx-auto max-w-md px-4 py-6">
-        <Outlet />
+        <Outlet/>
       </main>
     </div>
   )
