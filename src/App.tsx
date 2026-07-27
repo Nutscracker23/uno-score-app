@@ -9,7 +9,7 @@ import {HistoryPage} from '@/pages/HistoryPage'
 import {GameDetailPage} from '@/pages/GameDetailPage'
 import {PartiesPage} from '@/pages/PartiesPage'
 import {useRefresh} from "@/hooks/useAuth.ts";
-import {ReactNode} from "react";
+import type {ReactNode} from "react";
 
 const queryClient = new QueryClient({
   defaultOptions: {

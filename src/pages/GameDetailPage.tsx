@@ -232,9 +232,9 @@ function RoundsHistory({
   gameId: string
   standings: Standing[]
 }) {
-  if (!rounds.length) return null
-
   const {t} = useTranslation('game')
+
+  if (!rounds.length) return null
 
   return (
     <div className="overflow-hidden rounded-xl border border-slate-700">
@@ -266,10 +266,12 @@ function RoundsHistory({
 
 
 function WinnerBanner({standings, winnerId}: { standings: Standing[]; winnerId: string }) {
+  const {t} = useTranslation('game')
+
   const winner = standings.find((s) => s.player_id === winnerId)
+
   if (!winner) return null
 
-  const {t} = useTranslation('game')
 
   return (
     <div className="rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-4 text-center">

@@ -39,7 +39,6 @@ apiClient.interceptors.response.use(
                     {},
                     {withCredentials: true},
                 )
-                console.log({access_token})
                 const {setAuth} = useAuthStore.getState()
                 const user = await authApi.me(access_token)
                 setAuth(user, access_token)
