@@ -322,10 +322,10 @@ export function GameDetailPage() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl font-semibold">
-            {isFinished ? t('finishedGame') : t('roundsHistory', {round: game.rounds.length + 1})}
+            {isFinished ? t('finishedGame') : t('roundsHistory', {count: game.rounds.length + 1})}
           </h2>
           <p className="text-sm text-slate-400">
-            {t('target')}: {game.target_score} pts · {t('playersCount_one', {count: game.standings.length})}
+            {t('target')}: {game.target_score} pts · {t('playersCount', {count: game.standings.length})}
           </p>
         </div>
 
@@ -356,14 +356,14 @@ export function GameDetailPage() {
         <WinnerBanner standings={game.standings} winnerId={game.winner_id}/>
       )}
 
-      {/* Standings */}
-      <StandingsTable standings={game.standings} targetScore={game.target_score}
-                      continueAfterTarget={game.continue_after_target}/>
-
       {/* Add round */}
       {!isFinished && (
         <AddRoundForm gameId={game.id} standings={game.standings}/>
       )}
+
+      {/* Standings */}
+      <StandingsTable standings={game.standings} targetScore={game.target_score}
+                      continueAfterTarget={game.continue_after_target}/>
 
       {/* Rounds history */}
       <RoundsHistory rounds={game.rounds} gameId={game.id} standings={game.standings}/>

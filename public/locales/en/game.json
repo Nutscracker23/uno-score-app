@@ -21,8 +21,7 @@
   "addRound": "Add round",
   "winner": "Winner",
   "scoreCollected": "Score collected",
-  "roundsHistory_one": "{{count}} round",
-  "roundsHistory_other": "{{count}} rounds",
+  "roundsHistory": "{{count}} round",
   "game_winner": "{{name}} wins!",
   "score": "score",
   "pointsWon": "{{score}} points · {{rounds}} rounds won"
