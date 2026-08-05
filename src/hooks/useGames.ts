@@ -1,7 +1,7 @@
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
-import {gamesApi} from '@/api/games'
-import {useGameStore} from '@/store/gameStore'
-import type {GameCreate, GameUpdate, RoundCreate, RoundUpdate} from '@/types'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { gamesApi } from '@/api/games'
+import { useGameStore } from '@/store/gameStore'
+import type { GameCreate, GameUpdate, RoundCreate, RoundUpdate } from '@/types'
 
 export const GAMES_KEY = ['games'] as const
 
@@ -22,11 +22,11 @@ export function useGame(id: string) {
 
 export function useCreateGame() {
   const qc = useQueryClient()
-  const {setActiveGame} = useGameStore()
+  const { setActiveGame } = useGameStore()
   return useMutation({
     mutationFn: (payload: GameCreate) => gamesApi.create(payload),
     onSuccess: (game) => {
-      qc.invalidateQueries({queryKey: GAMES_KEY})
+      qc.invalidateQueries({ queryKey: GAMES_KEY })
       setActiveGame(game)
     },
   })
@@ -35,21 +35,20 @@ export function useCreateGame() {
 export function useUpdateGame() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: ({id, ...payload}: GameUpdate & { id: string }) =>
-      gamesApi.update(id, payload),
+    mutationFn: ({ id, ...payload }: GameUpdate & { id: string }) => gamesApi.update(id, payload),
     onSuccess: (game) => {
-      qc.invalidateQueries({queryKey: [...GAMES_KEY, game.id]})
+      qc.invalidateQueries({ queryKey: [...GAMES_KEY, game.id] })
     },
   })
 }
 
 export function useFinishGame() {
   const qc = useQueryClient()
-  const {setActiveGame} = useGameStore()
+  const { setActiveGame } = useGameStore()
   return useMutation({
     mutationFn: (id: string) => gamesApi.finish(id),
     onSuccess: (game) => {
-      qc.invalidateQueries({queryKey: GAMES_KEY})
+      qc.invalidateQueries({ queryKey: GAMES_KEY })
       qc.setQueryData([...GAMES_KEY, game.id], game)
       setActiveGame(null)
     },
@@ -60,13 +59,13 @@ export function useDeleteGame() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: (id: string) => gamesApi.delete(id),
-    onSuccess: () => qc.invalidateQueries({queryKey: GAMES_KEY}),
+    onSuccess: () => qc.invalidateQueries({ queryKey: GAMES_KEY }),
   })
 }
 
 export function useAddRound(gameId: string) {
   const qc = useQueryClient()
-  const {updateActiveGame} = useGameStore()
+  const { updateActiveGame } = useGameStore()
   return useMutation({
     mutationFn: (payload: RoundCreate) => gamesApi.addRound(gameId, payload),
     onSuccess: (game) => {
@@ -78,9 +77,9 @@ export function useAddRound(gameId: string) {
 
 export function useUpdateRound(gameId: string) {
   const qc = useQueryClient()
-  const {updateActiveGame} = useGameStore()
+  const { updateActiveGame } = useGameStore()
   return useMutation({
-    mutationFn: ({roundId, ...payload}: RoundUpdate & { roundId: string }) =>
+    mutationFn: ({ roundId, ...payload }: RoundUpdate & { roundId: string }) =>
       gamesApi.updateRound(gameId, roundId, payload),
     onSuccess: (game) => {
       qc.setQueryData([...GAMES_KEY, gameId], game)
@@ -91,7 +90,7 @@ export function useUpdateRound(gameId: string) {
 
 export function useDeleteRound(gameId: string) {
   const qc = useQueryClient()
-  const {updateActiveGame} = useGameStore()
+  const { updateActiveGame } = useGameStore()
   return useMutation({
     mutationFn: (roundId: string) => gamesApi.deleteRound(gameId, roundId),
     onSuccess: (game) => {

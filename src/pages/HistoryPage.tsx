@@ -1,16 +1,15 @@
-import {useState} from 'react'
-import {useNavigate} from 'react-router'
-import {useGames, useDeleteGame} from '@/hooks/useGames'
-import type {GameRead} from '@/types'
-import {useTranslation} from "react-i18next";
+import { useState } from 'react'
+import { useNavigate } from 'react-router'
+import { useGames, useDeleteGame } from '@/hooks/useGames'
+import type { GameRead } from '@/types'
+import { useTranslation } from 'react-i18next'
 
-
-function GameCard({game}: { game: GameRead }) {
+function GameCard({ game }: { game: GameRead }) {
   const navigate = useNavigate()
   const deleteGame = useDeleteGame()
   const [confirmDelete, setConfirmDelete] = useState(false)
-  const {t} = useTranslation('history')
-  const {t: tActions} = useTranslation('common', {keyPrefix: 'actions'})
+  const { t } = useTranslation('history')
+  const { t: tActions } = useTranslation('common', { keyPrefix: 'actions' })
 
   const isFinished = game.status === 'finished'
   const date = new Date(game.created_at).toLocaleDateString('en-GB', {
@@ -20,7 +19,7 @@ function GameCard({game}: { game: GameRead }) {
   })
 
   return (
-    <div className="rounded-xl border border-slate-700 bg-slate-800 p-4 space-y-3">
+    <div className="space-y-3 rounded-xl border border-slate-700 bg-slate-800 p-4">
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center gap-2">
@@ -40,7 +39,7 @@ function GameCard({game}: { game: GameRead }) {
           {!isFinished && (
             <button
               onClick={() => navigate(`/games/${game.id}`)}
-              className="rounded-lg bg-uno-red px-3 py-1.5 text-xs font-semibold text-white hover:opacity-90"
+              className="bg-uno-red rounded-lg px-3 py-1.5 text-xs font-semibold text-white hover:opacity-90"
             >
               {t('resume')}
             </button>
@@ -60,7 +59,9 @@ function GameCard({game}: { game: GameRead }) {
           <div className="flex items-center gap-3">
             <p className="text-xs text-slate-400">{t('confirmDelete')}</p>
             <button
-              onClick={() => deleteGame.mutate(game.id, {onSuccess: () => setConfirmDelete(false)})}
+              onClick={() =>
+                deleteGame.mutate(game.id, { onSuccess: () => setConfirmDelete(false) })
+              }
               disabled={deleteGame.isPending}
               className="text-xs text-red-400 hover:text-red-300 disabled:opacity-50"
             >
@@ -86,13 +87,12 @@ function GameCard({game}: { game: GameRead }) {
   )
 }
 
-
 export function HistoryPage() {
-  const {data: games = [], isLoading} = useGames()
+  const { data: games = [], isLoading } = useGames()
   const navigate = useNavigate()
   const [filter, setFilter] = useState<'all' | 'in_progress' | 'finished'>('all')
-  const {t} = useTranslation('history')
-  const {t: tActions} = useTranslation('common', {keyPrefix: 'actions'})
+  const { t } = useTranslation('history')
+  const { t: tActions } = useTranslation('common', { keyPrefix: 'actions' })
 
   const filtered = games
     .filter((g) => filter === 'all' || g.status === filter)
@@ -106,7 +106,7 @@ export function HistoryPage() {
         <h2 className="text-xl font-semibold">{t('title')}</h2>
         <button
           onClick={() => navigate('/')}
-          className="rounded-lg bg-uno-red px-4 py-1.5 text-sm font-semibold text-white hover:opacity-90"
+          className="bg-uno-red rounded-lg px-4 py-1.5 text-sm font-semibold text-white hover:opacity-90"
         >
           + {tActions('new')}
         </button>
@@ -114,18 +114,21 @@ export function HistoryPage() {
 
       {/* Filter tabs */}
       <div className="flex gap-1 rounded-lg bg-slate-800 p-1">
-        {([
-          {key: 'all', label: t('filters.all')},
-          {key: 'in_progress', label: `${t('filters.active')}${inProgressCount ? ` (${inProgressCount})` : ''}`},
-          {key: 'finished', label: t('filters.finished')},
-        ] as const).map(({key, label}) => (
+        {(
+          [
+            { key: 'all', label: t('filters.all') },
+            {
+              key: 'in_progress',
+              label: `${t('filters.active')}${inProgressCount ? ` (${inProgressCount})` : ''}`,
+            },
+            { key: 'finished', label: t('filters.finished') },
+          ] as const
+        ).map(({ key, label }) => (
           <button
             key={key}
             onClick={() => setFilter(key)}
             className={`flex-1 rounded-md py-1.5 text-sm font-medium transition-colors ${
-              filter === key
-                ? 'bg-slate-700 text-white'
-                : 'text-slate-400 hover:text-white'
+              filter === key ? 'bg-slate-700 text-white' : 'text-slate-400 hover:text-white'
             }`}
           >
             {label}
@@ -142,7 +145,7 @@ export function HistoryPage() {
       ) : (
         <div className="space-y-2">
           {filtered.map((game: GameRead) => (
-            <GameCard key={game.id} game={game}/>
+            <GameCard key={game.id} game={game} />
           ))}
         </div>
       )}

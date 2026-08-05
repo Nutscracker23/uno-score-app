@@ -1,24 +1,23 @@
-import {useState} from 'react'
-import {useNavigate} from 'react-router'
-import {useParties} from '@/hooks/useParties'
-import {usePlayers, useCreatePlayer} from '@/hooks/usePlayers'
-import {useCreateGame} from '@/hooks/useGames'
-import type {Party, Player} from '@/types'
-import {useTranslation} from 'react-i18next'
-
+import { useState } from 'react'
+import { useNavigate } from 'react-router'
+import { useParties } from '@/hooks/useParties'
+import { usePlayers, useCreatePlayer } from '@/hooks/usePlayers'
+import { useCreateGame } from '@/hooks/useGames'
+import type { Party, Player } from '@/types'
+import { useTranslation } from 'react-i18next'
 
 function PlayerSelector({
-                          selected,
-                          onChange,
-                        }: {
+  selected,
+  onChange,
+}: {
   selected: string[]
   onChange: (ids: string[]) => void
 }) {
-  const {data: players = []} = usePlayers()
+  const { data: players = [] } = usePlayers()
   const createPlayer = useCreatePlayer()
   const [newName, setNewName] = useState('')
-  const {t} = useTranslation('game')
-  const {t: tActions} = useTranslation('common', {keyPrefix: 'actions'})
+  const { t } = useTranslation('game')
+  const { t: tActions } = useTranslation('common', { keyPrefix: 'actions' })
 
   const toggle = (id: string) =>
     onChange(selected.includes(id) ? selected.filter((x) => x !== id) : [...selected, id])
@@ -26,7 +25,7 @@ function PlayerSelector({
   const handleCreate = async () => {
     const trimmed = newName.trim()
     if (!trimmed) return
-    const player = await createPlayer.mutateAsync({name: trimmed})
+    const player = await createPlayer.mutateAsync({ name: trimmed })
     onChange([...selected, player.id])
     setNewName('')
   }
@@ -62,7 +61,7 @@ function PlayerSelector({
           onChange={(e) => setNewName(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
           placeholder={t('newPlayerName')}
-          className="flex-1 rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-sm text-white placeholder-slate-400 focus:border-uno-red focus:outline-none"
+          className="focus:border-uno-red flex-1 rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-sm text-white placeholder-slate-400 focus:outline-none"
         />
         <button
           onClick={handleCreate}
@@ -76,14 +75,14 @@ function PlayerSelector({
       {/* Selected */}
       {selected.length > 0 && (
         <div>
-          <p className="mb-2 text-xs text-slate-400">{t('inGame', {count: selected.length})}</p>
+          <p className="mb-2 text-xs text-slate-400">{t('inGame', { count: selected.length })}</p>
           <div className="flex flex-wrap gap-2">
             {selected.map((id) => {
               const player = players.find((p) => p.id === id)
               return (
                 <span
                   key={id}
-                  className="flex items-center gap-1 rounded-full bg-uno-red/20 px-3 py-1 text-sm text-uno-red"
+                  className="bg-uno-red/20 text-uno-red flex items-center gap-1 rounded-full px-3 py-1 text-sm"
                 >
                   {player?.name ?? id}
                   <button
@@ -102,25 +101,21 @@ function PlayerSelector({
   )
 }
 
-
 function PartyQuickSelect({
-                            parties,
-                            onSelect,
-                          }: {
+  parties,
+  onSelect,
+}: {
   parties: Party[]
   onSelect: (ids: string[]) => void
 }) {
   const [open, setOpen] = useState(false)
-  const {t} = useTranslation('game')
+  const { t } = useTranslation('game')
 
   if (!parties.length) return null
 
   return (
     <div>
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="text-sm text-uno-red hover:underline"
-      >
+      <button onClick={() => setOpen((v) => !v)} className="text-uno-red text-sm hover:underline">
         {open ? t('hideParties') : `⚡ ${t('quickSelectParty')}`}
       </button>
 
@@ -147,12 +142,11 @@ function PartyQuickSelect({
   )
 }
 
-
 export function HomePage() {
   const navigate = useNavigate()
-  const {data: parties = []} = useParties()
+  const { data: parties = [] } = useParties()
   const createGame = useCreateGame()
-  const {t} = useTranslation('game')
+  const { t } = useTranslation('game')
 
   const [targetScore, setTargetScore] = useState(1000)
   const [playerIds, setPlayerIds] = useState<string[]>([])
@@ -161,8 +155,12 @@ export function HomePage() {
   const handleStart = () => {
     if (playerIds.length < 2) return
     createGame.mutate(
-      {target_score: targetScore, continue_after_target: continueAfterTarget, player_ids: playerIds},
-      {onSuccess: (game) => navigate(`/games/${game.id}`)},
+      {
+        target_score: targetScore,
+        continue_after_target: continueAfterTarget,
+        player_ids: playerIds,
+      },
+      { onSuccess: (game) => navigate(`/games/${game.id}`) },
     )
   }
 
@@ -180,11 +178,10 @@ export function HomePage() {
           step={100}
           value={targetScore}
           onChange={(e) => setTargetScore(Number(e.target.value))}
-          className="w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-white focus:border-uno-red focus:outline-none"
+          className="focus:border-uno-red w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-white focus:outline-none"
         />
       </div>
-      <div
-        className="flex items-center justify-between rounded-lg border border-slate-600 bg-slate-800 px-3 py-2">
+      <div className="flex items-center justify-between rounded-lg border border-slate-600 bg-slate-800 px-3 py-2">
         <span className="text-sm text-slate-300">{t('continueAfterTarget')}</span>
         <button
           type="button"
@@ -195,30 +192,32 @@ export function HomePage() {
             continueAfterTarget ? 'bg-uno-red' : 'bg-slate-600'
           }`}
         >
-    <span
-      aria-hidden="true"
-      className={`pointer-events-none absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${
-        continueAfterTarget ? 'translate-x-5' : 'translate-x-0'
-      }`}
-    />
+          <span
+            aria-hidden="true"
+            className={`pointer-events-none absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${
+              continueAfterTarget ? 'translate-x-5' : 'translate-x-0'
+            }`}
+          />
         </button>
       </div>
 
       {/* Party quick select */}
-      <PartyQuickSelect parties={parties} onSelect={setPlayerIds}/>
+      <PartyQuickSelect parties={parties} onSelect={setPlayerIds} />
 
       {/* Player selector */}
       <div>
         <label className="mb-2 block text-sm text-slate-400">{t('players')}</label>
-        <PlayerSelector selected={playerIds} onChange={setPlayerIds}/>
+        <PlayerSelector selected={playerIds} onChange={setPlayerIds} />
       </div>
 
       <button
         onClick={handleStart}
         disabled={playerIds.length < 2 || createGame.isPending}
-        className="w-full rounded-lg bg-uno-red py-3 font-semibold text-white hover:opacity-90 disabled:opacity-50"
+        className="bg-uno-red w-full rounded-lg py-3 font-semibold text-white hover:opacity-90 disabled:opacity-50"
       >
-        {createGame.isPending ? t('startingGame') : `${t('startGame')} · ${t('playersCount', {count: playerIds.length})}`}
+        {createGame.isPending
+          ? t('startingGame')
+          : `${t('startGame')} · ${t('playersCount', { count: playerIds.length })}`}
       </button>
     </div>
   )

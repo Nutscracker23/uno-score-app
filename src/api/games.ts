@@ -1,5 +1,12 @@
 import { apiClient } from './client'
-import type { GameRead, GameDetail, GameCreate, GameUpdate, RoundCreate, RoundUpdate } from '@/types'
+import type {
+  GameRead,
+  GameDetail,
+  GameCreate,
+  GameUpdate,
+  RoundCreate,
+  RoundUpdate,
+} from '@/types'
 
 export const gamesApi = {
   list: async (): Promise<GameRead[]> => {
@@ -36,8 +43,15 @@ export const gamesApi = {
     return data
   },
 
-  updateRound: async (gameId: string, roundId: string, payload: RoundUpdate): Promise<GameDetail> => {
-    const { data } = await apiClient.patch<GameDetail>(`/games/${gameId}/rounds/${roundId}`, payload)
+  updateRound: async (
+    gameId: string,
+    roundId: string,
+    payload: RoundUpdate,
+  ): Promise<GameDetail> => {
+    const { data } = await apiClient.patch<GameDetail>(
+      `/games/${gameId}/rounds/${roundId}`,
+      payload,
+    )
     return data
   },
 

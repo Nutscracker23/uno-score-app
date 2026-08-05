@@ -1,28 +1,22 @@
-import {useState} from 'react'
-import {
-  useParties,
-  useCreateParty,
-  useUpdateParty,
-  useDeleteParty
-} from '@/hooks/useParties'
-import {usePlayers, useCreatePlayer, useDetachPlayer} from '@/hooks/usePlayers'
-import type {Party, Player} from '@/types'
-import {useTranslation} from "react-i18next";
-
+import { useState } from 'react'
+import { useParties, useCreateParty, useUpdateParty, useDeleteParty } from '@/hooks/useParties'
+import { usePlayers, useCreatePlayer, useDetachPlayer } from '@/hooks/usePlayers'
+import type { Party, Player } from '@/types'
+import { useTranslation } from 'react-i18next'
 
 function PlayerSelector({
-                          selected,
-                          onChange,
-                        }: {
+  selected,
+  onChange,
+}: {
   selected: string[]
   onChange: (ids: string[]) => void
 }) {
-  const {data: players = []} = usePlayers()
+  const { data: players = [] } = usePlayers()
   const createPlayer = useCreatePlayer()
   const detachPlayer = useDetachPlayer()
   const [newName, setNewName] = useState('')
-  const {t} = useTranslation('parties')
-  const {t: tActions} = useTranslation('common', {keyPrefix: 'actions'})
+  const { t } = useTranslation('parties')
+  const { t: tActions } = useTranslation('common', { keyPrefix: 'actions' })
 
   const toggle = (id: string) =>
     onChange(selected.includes(id) ? selected.filter((x) => x !== id) : [...selected, id])
@@ -30,7 +24,7 @@ function PlayerSelector({
   const handleCreate = async () => {
     const trimmed = newName.trim()
     if (!trimmed) return
-    const player = await createPlayer.mutateAsync({name: trimmed})
+    const player = await createPlayer.mutateAsync({ name: trimmed })
     onChange([...selected, player.id])
     setNewName('')
   }
@@ -74,7 +68,7 @@ function PlayerSelector({
           onChange={(e) => setNewName(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
           placeholder={t('newPlayerName')}
-          className="flex-1 rounded-lg border border-slate-600 bg-slate-700 px-3 py-1.5 text-sm text-white placeholder-slate-400 focus:border-uno-red focus:outline-none"
+          className="focus:border-uno-red flex-1 rounded-lg border border-slate-600 bg-slate-700 px-3 py-1.5 text-sm text-white placeholder-slate-400 focus:outline-none"
         />
         <button
           onClick={handleCreate}
@@ -88,41 +82,34 @@ function PlayerSelector({
   )
 }
 
-
-function CreatePartyForm({onClose}: { onClose: () => void }) {
+function CreatePartyForm({ onClose }: { onClose: () => void }) {
   const [name, setName] = useState('')
   const [playerIds, setPlayerIds] = useState<string[]>([])
   const createParty = useCreateParty()
-  const {t} = useTranslation('parties')
+  const { t } = useTranslation('parties')
 
   const handleCreate = () => {
     if (!name.trim()) return
-    createParty.mutate(
-      {name: name.trim(), player_ids: playerIds},
-      {onSuccess: onClose},
-    )
+    createParty.mutate({ name: name.trim(), player_ids: playerIds }, { onSuccess: onClose })
   }
 
   return (
-    <div
-      className="rounded-xl border border-slate-700 bg-slate-800 p-4 space-y-4">
+    <div className="space-y-4 rounded-xl border border-slate-700 bg-slate-800 p-4">
       <h3 className="font-medium">{t('newParty')}</h3>
 
       <div>
-        <label className="mb-1 block text-sm text-slate-400">Party
-          name</label>
+        <label className="mb-1 block text-sm text-slate-400">Party name</label>
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Friday crew"
-          className="w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-white placeholder-slate-400 focus:border-uno-red focus:outline-none"
+          className="focus:border-uno-red w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-white placeholder-slate-400 focus:outline-none"
         />
       </div>
 
       <div>
-        <label
-          className="mb-2 block text-sm text-slate-400">Players</label>
-        <PlayerSelector selected={playerIds} onChange={setPlayerIds}/>
+        <label className="mb-2 block text-sm text-slate-400">Players</label>
+        <PlayerSelector selected={playerIds} onChange={setPlayerIds} />
       </div>
 
       <div className="flex gap-2">
@@ -135,7 +122,7 @@ function CreatePartyForm({onClose}: { onClose: () => void }) {
         <button
           onClick={handleCreate}
           disabled={!name.trim() || createParty.isPending}
-          className="flex-1 rounded-lg bg-uno-red py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
+          className="bg-uno-red flex-1 rounded-lg py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
         >
           {createParty.isPending ? 'Creating…' : 'Create'}
         </button>
@@ -144,40 +131,34 @@ function CreatePartyForm({onClose}: { onClose: () => void }) {
   )
 }
 
-
-function EditPartyForm({party, onClose}: {
-  party: Party;
-  onClose: () => void
-}) {
+function EditPartyForm({ party, onClose }: { party: Party; onClose: () => void }) {
   const [name, setName] = useState(party.name)
   const [playerIds, setPlayerIds] = useState<string[]>(party.players.map((p) => p.id))
   const updateParty = useUpdateParty()
-  const {t: tActions} = useTranslation('common', {keyPrefix: 'actions'})
-  const {t} = useTranslation('parties')
+  const { t: tActions } = useTranslation('common', { keyPrefix: 'actions' })
+  const { t } = useTranslation('parties')
 
   const handleSave = () => {
     updateParty.mutate(
-      {id: party.id, name: name.trim(), player_ids: playerIds},
-      {onSuccess: onClose},
+      { id: party.id, name: name.trim(), player_ids: playerIds },
+      { onSuccess: onClose },
     )
   }
 
   return (
-    <div className="space-y-4 border-t border-slate-700 px-4 pb-4 pt-3">
+    <div className="space-y-4 border-t border-slate-700 px-4 pt-3 pb-4">
       <div>
-        <label
-          className="mb-1 block text-sm text-slate-400">{t('partyName')}</label>
+        <label className="mb-1 block text-sm text-slate-400">{t('partyName')}</label>
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-white focus:border-uno-red focus:outline-none"
+          className="focus:border-uno-red w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-white focus:outline-none"
         />
       </div>
 
       <div>
-        <label
-          className="mb-2 block text-sm text-slate-400">{t('players')}</label>
-        <PlayerSelector selected={playerIds} onChange={setPlayerIds}/>
+        <label className="mb-2 block text-sm text-slate-400">{t('players')}</label>
+        <PlayerSelector selected={playerIds} onChange={setPlayerIds} />
       </div>
 
       <div className="flex gap-2">
@@ -190,7 +171,7 @@ function EditPartyForm({party, onClose}: {
         <button
           onClick={handleSave}
           disabled={!name.trim() || updateParty.isPending}
-          className="flex-1 rounded-lg bg-uno-red py-1.5 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
+          className="bg-uno-red flex-1 rounded-lg py-1.5 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
         >
           {updateParty.isPending ? tActions('saving') : tActions('save')}
         </button>
@@ -199,36 +180,33 @@ function EditPartyForm({party, onClose}: {
   )
 }
 
-
-function PartyCard({party}: { party: Party }) {
+function PartyCard({ party }: { party: Party }) {
   const [expanded, setExpanded] = useState(false)
   const [editing, setEditing] = useState(false)
   const deleteParty = useDeleteParty()
-  const {t} = useTranslation('parties')
-  const {t: tActions} = useTranslation('common', {keyPrefix: 'actions'})
+  const { t } = useTranslation('parties')
+  const { t: tActions } = useTranslation('common', { keyPrefix: 'actions' })
 
   return (
     <div className="rounded-xl border border-slate-700 bg-slate-800">
       <button
         onClick={() => {
-          setExpanded((v) => !v);
+          setExpanded((v) => !v)
           setEditing(false)
         }}
         className="flex w-full items-center justify-between px-4 py-3 text-left"
       >
         <span className="font-medium">{party.name}</span>
         <span className="text-sm text-slate-400">
-                    {t('playersCount', {count: party.players.length})} {expanded ? '▲' : '▼'}
+          {t('playersCount', { count: party.players.length })} {expanded ? '▲' : '▼'}
         </span>
       </button>
 
       {expanded && !editing && (
-        <div
-          className="border-t border-slate-700 px-4 pb-4 pt-3 space-y-3">
+        <div className="space-y-3 border-t border-slate-700 px-4 pt-3 pb-4">
           <div className="flex flex-wrap gap-2">
             {party.players.map((p: Player) => (
-              <span key={p.id}
-                    className="rounded-full bg-slate-700 px-3 py-1 text-sm">
+              <span key={p.id} className="rounded-full bg-slate-700 px-3 py-1 text-sm">
                 {p.name}
               </span>
             ))}
@@ -255,19 +233,16 @@ function PartyCard({party}: { party: Party }) {
         </div>
       )}
 
-      {expanded && editing && (
-        <EditPartyForm party={party} onClose={() => setEditing(false)}/>
-      )}
+      {expanded && editing && <EditPartyForm party={party} onClose={() => setEditing(false)} />}
     </div>
   )
 }
 
-
 export function PartiesPage() {
-  const {data: parties = [], isLoading} = useParties()
+  const { data: parties = [], isLoading } = useParties()
   const [creating, setCreating] = useState(false)
-  const {t} = useTranslation('parties')
-  const {t: tActions} = useTranslation('common', {keyPrefix: 'actions'})
+  const { t } = useTranslation('parties')
+  const { t: tActions } = useTranslation('common', { keyPrefix: 'actions' })
 
   return (
     <div className="space-y-4">
@@ -276,14 +251,14 @@ export function PartiesPage() {
         {!creating && (
           <button
             onClick={() => setCreating(true)}
-            className="rounded-lg bg-uno-red px-4 py-1.5 text-sm font-semibold text-white hover:opacity-90"
+            className="bg-uno-red rounded-lg px-4 py-1.5 text-sm font-semibold text-white hover:opacity-90"
           >
             + {tActions('new')}
           </button>
         )}
       </div>
 
-      {creating && <CreatePartyForm onClose={() => setCreating(false)}/>}
+      {creating && <CreatePartyForm onClose={() => setCreating(false)} />}
 
       {isLoading ? (
         <p className="text-center text-slate-400">{t('loading')}</p>
@@ -292,7 +267,7 @@ export function PartiesPage() {
       ) : (
         <div className="space-y-2">
           {parties.map((party) => (
-            <PartyCard key={party.id} party={party}/>
+            <PartyCard key={party.id} party={party} />
           ))}
         </div>
       )}

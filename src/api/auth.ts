@@ -2,21 +2,16 @@ import { apiClient, API_PREFIX } from './client'
 import type { User } from '@/types'
 
 export const authApi = {
-  oauthLoginUrl: (provider: string): string =>
-    `${API_PREFIX}/oauth/login/${provider}`,
+  oauthLoginUrl: (provider: string): string => `${API_PREFIX}/oauth/login/${provider}`,
 
   me: async (token?: string): Promise<User> => {
-    const { data } = await apiClient.get<User>(
-        '/users/me',
-        {
-          headers: token ? { Authorization: `Bearer ${token}` } : {},
-        }
-    )
+    const { data } = await apiClient.get<User>('/users/me', {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    })
     return data
   },
 
-    logout: async (): Promise<void> => {
-        await apiClient.post('/auth/logout')
-    },
-
+  logout: async (): Promise<void> => {
+    await apiClient.post('/auth/logout')
+  },
 }

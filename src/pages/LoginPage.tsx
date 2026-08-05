@@ -1,16 +1,16 @@
-import {Navigate, useNavigate} from 'react-router'
-import {authApi} from '@/api/auth'
-import {useAuthStore} from '@/store/authStore'
-import {useTranslation} from "react-i18next";
+import { Navigate, useNavigate } from 'react-router'
+import { authApi } from '@/api/auth'
+import { useAuthStore } from '@/store/authStore'
+import { useTranslation } from 'react-i18next'
 
 export function LoginPage() {
-  const {isAuthenticated} = useAuthStore()
-  const {t} = useTranslation('auth')
-  const {setAuth} = useAuthStore()
-  const navigate = useNavigate();
+  const { isAuthenticated } = useAuthStore()
+  const { t } = useTranslation('auth')
+  const { setAuth } = useAuthStore()
+  const navigate = useNavigate()
 
   if (isAuthenticated) {
-    return <Navigate to="/"/>
+    return <Navigate to="/" />
   }
 
   const handleGoogleLogin = () => {
@@ -27,7 +27,7 @@ export function LoginPage() {
       window.removeEventListener('message', handler)
       clearInterval(popupCheck)
 
-      const {access_token} = event.data
+      const { access_token } = event.data
       try {
         const user = await authApi.me(access_token)
         setAuth(user, access_token)
@@ -51,13 +51,11 @@ export function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-900 px-4">
       <div className="w-full max-w-sm">
-        <h1 className="mb-8 text-center text-3xl font-bold text-uno-red">🃏 UnoScore</h1>
+        <h1 className="text-uno-red mb-8 text-center text-3xl font-bold">🃏 UnoScore</h1>
 
         <div className="rounded-2xl border border-slate-700 bg-slate-800 p-6">
           <h2 className="mb-2 text-xl font-semibold">{t('signIn')}</h2>
-          <p className="mb-6 text-sm text-slate-400">
-            Track your Uno games and standings.
-          </p>
+          <p className="mb-6 text-sm text-slate-400">Track your Uno games and standings.</p>
 
           <button
             onClick={handleGoogleLogin}
