@@ -277,7 +277,6 @@ function WinnerBanner({standings, winnerId}: { standings: Standing[]; winnerId: 
     <div className="rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-4 text-center">
       <p className="text-2xl">🎉</p>
       <p className="mt-1 text-lg font-bold text-yellow-400">{t('game_winner', {name: winner.name})}</p>
-      {/*<p className="text-sm text-slate-400">{winner.score} points · {winner.rounds_won} rounds won</p>*/}
       <p className="text-sm text-slate-400">{t('pointsWon', {score: winner.score, rounds: winner.rounds_won})}</p>
     </div>
   )
@@ -358,6 +357,13 @@ export function GameDetailPage() {
 
       {/* Add round */}
       {!isFinished && (
+        // <button
+        //   onClick={handleSubmit}
+        //   // disabled={!winnerId || !score || addRound.isPending}
+        //   className="w-full rounded-lg bg-uno-red py-2 font-semibold text-white hover:opacity-90 disabled:opacity-50"
+        // >
+        //   {addRound.isPending ? tActions('saving') : t('addRound')}
+        // </button>
         <AddRoundForm gameId={game.id} standings={game.standings}/>
       )}
 
