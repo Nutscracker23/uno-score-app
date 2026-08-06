@@ -122,7 +122,7 @@ function PartyQuickSelect({
       </button>
 
       {open && (
-        <div className="mt-2 flex flex-wrap gap-2 md:flex-row md:flex-wrap-reverse">
+        <div className="mt-2 flex flex-wrap gap-2 sm:flex-row sm:flex-wrap-reverse">
           {parties.map((party) => (
             <button
               key={party.id}
@@ -130,7 +130,7 @@ function PartyQuickSelect({
                 onSelect([...new Set([...selected, ...party.players.map((p) => p.id)])])
                 setOpen(false)
               }}
-              className="flex w-full min-w-full items-center justify-between rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-left hover:border-slate-400 sm:min-w-1/2 md:min-w-1/3 md:flex-1 md:flex-col md:items-start lg:min-w-1/4"
+              className="flex w-full min-w-full items-center justify-between rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-left hover:border-slate-400 sm:min-w-1/2 md:min-w-1/3 sm:flex-1 sm:flex-col sm:items-start lg:min-w-1/4"
             >
               <span className="font-medium">{party.name}</span>
               <span className="text-xs text-slate-400">

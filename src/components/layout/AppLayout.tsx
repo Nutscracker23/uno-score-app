@@ -23,7 +23,7 @@ export function AppLayout() {
   return (
     <div className="min-h-screen bg-slate-900 text-white">
       <header className="sticky top-0 z-10 border-b border-slate-800 bg-slate-900/95 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
           <Link to="/" className="text-uno-red text-lg font-bold">
             🃏 Uno
           </Link>
@@ -38,7 +38,7 @@ export function AppLayout() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 py-6">
+      <main className="mx-auto max-w-7xl px-4 py-6">
         <Outlet />
       </main>
     </div>

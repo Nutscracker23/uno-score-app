@@ -193,7 +193,7 @@ function PartyCard({ party }: { party: Party }) {
   const { t: tActions } = useTranslation('common', { keyPrefix: 'actions' })
 
   return (
-    <div className="w-full min-w-full rounded-xl border border-slate-700 bg-slate-800 md:min-w-1/3 md:flex-1">
+    <div className="w-full min-w-full rounded-xl border border-slate-700 bg-slate-800 sm:min-w-1/3 md:min-w-1/4 sm:flex-1">
       <button
         onClick={() => {
           setExpanded((v) => !v)
@@ -270,7 +270,7 @@ function PartyBlock() {
       ) : !parties.length && !creating ? (
         <p className="text-center text-slate-400">{t('noParties')}</p>
       ) : (
-        <div className="flex flex-col flex-wrap items-start gap-2 md:flex-row">
+        <div className="flex flex-col flex-wrap items-start gap-2 sm:flex-row">
           {parties.map((party) => (
             <PartyCard key={party.id} party={party} />
           ))}
@@ -307,7 +307,7 @@ function PlayersBlock() {
       ) : !players.length && !creating ? (
         <p className="text-center text-slate-400">{t('noPlayers')}</p>
       ) : (
-        <div className="flex flex-col flex-wrap items-start gap-2 md:flex-row">
+        <div className="flex flex-col flex-wrap items-start gap-2 sm:flex-row">
           {players.map((player) => (
             <PlayerCard key={player.id} player={player} />
           ))}
@@ -334,7 +334,7 @@ function PlayerCard({ player }: { player: Player }) {
 
   if (editing) {
     return (
-      <div className="flex w-full min-w-full flex-wrap items-center justify-between space-y-4 rounded-xl border border-slate-700 bg-slate-800 px-4 py-2 md:min-w-1/3 md:flex-1 lg:min-w-1/4">
+      <div className="flex w-full min-w-full flex-wrap items-center justify-between space-y-4 rounded-xl border border-slate-700 bg-slate-800 px-4 py-2 sm:min-w-1/2 md:min-w-1/3 sm:flex-1 lg:min-w-1/4">
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -360,7 +360,7 @@ function PlayerCard({ player }: { player: Player }) {
   }
 
   return (
-    <div className="flex w-full min-w-full items-center justify-between rounded-xl border border-slate-700 bg-slate-800 px-4 py-2.5 md:min-w-1/3 md:flex-1 lg:min-w-1/4">
+    <div className="flex w-full min-w-full items-center justify-between rounded-xl border border-slate-700 bg-slate-800 px-4 py-2.5 sm:min-w-1/2 md:min-w-1/3 sm:flex-1 lg:min-w-1/4">
       <div className="flex items-center gap-3">
         <p className="leading-tight font-medium">{name}</p>
       </div>
