@@ -103,9 +103,11 @@ function PlayerSelector({
 
 function PartyQuickSelect({
   parties,
+  selected,
   onSelect,
 }: {
-  parties: Party[]
+  parties: Party[],
+  selected: string[],
   onSelect: (ids: string[]) => void
 }) {
   const [open, setOpen] = useState(false)
@@ -120,15 +122,15 @@ function PartyQuickSelect({
       </button>
 
       {open && (
-        <div className="mt-2 space-y-1">
+        <div className="mt-2 flex flex-wrap gap-2 md:flex-row md:flex-wrap-reverse">
           {parties.map((party) => (
             <button
               key={party.id}
               onClick={() => {
-                onSelect(party.players.map((p) => p.id))
+                onSelect([...new Set([...selected, ...party.players.map((p) => p.id)])])
                 setOpen(false)
               }}
-              className="flex w-full items-center justify-between rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-left hover:border-slate-400"
+              className="flex w-full min-w-full items-center justify-between rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-left hover:border-slate-400 sm:min-w-1/2 md:min-w-1/3 md:flex-1 md:flex-col md:items-start lg:min-w-1/4"
             >
               <span className="font-medium">{party.name}</span>
               <span className="text-xs text-slate-400">
@@ -188,7 +190,7 @@ export function HomePage() {
           role="switch"
           aria-checked={continueAfterTarget}
           onClick={() => setContinueAfterTarget((v) => !v)}
-          className={`relative h-6 w-11 flex-shrink-0 rounded-full transition-colors ${
+          className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
             continueAfterTarget ? 'bg-uno-red' : 'bg-slate-600'
           }`}
         >
@@ -202,7 +204,7 @@ export function HomePage() {
       </div>
 
       {/* Party quick select */}
-      <PartyQuickSelect parties={parties} onSelect={setPlayerIds} />
+      <PartyQuickSelect parties={parties} selected={playerIds} onSelect={setPlayerIds} />
 
       {/* Player selector */}
       <div>

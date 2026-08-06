@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import { useParties, useCreateParty, useUpdateParty, useDeleteParty } from '@/hooks/useParties'
-import { usePlayers, useCreatePlayer, useDetachPlayer } from '@/hooks/usePlayers'
+import {
+  usePlayers,
+  useCreatePlayer,
+  useDetachPlayer,
+  useUpdatePlayer,
+} from '@/hooks/usePlayers'
 import type { Party, Player } from '@/types'
 import { useTranslation } from 'react-i18next'
 
@@ -188,7 +193,7 @@ function PartyCard({ party }: { party: Party }) {
   const { t: tActions } = useTranslation('common', { keyPrefix: 'actions' })
 
   return (
-    <div className="rounded-xl border border-slate-700 bg-slate-800">
+    <div className="w-full min-w-full rounded-xl border border-slate-700 bg-slate-800 md:min-w-1/3 md:flex-1">
       <button
         onClick={() => {
           setExpanded((v) => !v)
@@ -238,15 +243,15 @@ function PartyCard({ party }: { party: Party }) {
   )
 }
 
-export function PartiesPage() {
+function PartyBlock() {
   const { data: parties = [], isLoading } = useParties()
   const [creating, setCreating] = useState(false)
   const { t } = useTranslation('parties')
   const { t: tActions } = useTranslation('common', { keyPrefix: 'actions' })
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
+    <div className="flex max-w-full flex-col flex-wrap space-y-4">
+      <div className="flex flex-1 items-center justify-between">
         <h2 className="text-xl font-semibold">{t('title')}</h2>
         {!creating && (
           <button
@@ -265,12 +270,124 @@ export function PartiesPage() {
       ) : !parties.length && !creating ? (
         <p className="text-center text-slate-400">{t('noParties')}</p>
       ) : (
-        <div className="space-y-2">
+        <div className="flex flex-col flex-wrap items-start gap-2 md:flex-row">
           {parties.map((party) => (
             <PartyCard key={party.id} party={party} />
           ))}
         </div>
       )}
+    </div>
+  )
+}
+
+function PlayersBlock() {
+  const { data: players = [], isLoading } = usePlayers()
+  const { t } = useTranslation('parties')
+  // const { t: tActions } = useTranslation('common', { keyPrefix: 'actions' })
+  const [creating, setCreating] = useState(false)
+
+  return (
+    <div className="flex max-w-full flex-col flex-wrap space-y-4">
+      <div className="flex flex-1 items-center justify-between">
+        <h2 className="text-xl font-semibold">{t('title')}</h2>
+        {/*{!creating && (
+          <button
+            onClick={() => setCreating(true)}
+            className="bg-uno-red rounded-lg px-4 py-1.5 text-sm font-semibold text-white hover:opacity-90"
+          >
+            + {tActions('new')}
+          </button>
+        )}*/}
+      </div>
+
+      {creating && <CreatePartyForm onClose={() => setCreating(false)} />}
+
+      {isLoading ? (
+        <p className="text-center text-slate-400">{t('loading')}</p>
+      ) : !players.length && !creating ? (
+        <p className="text-center text-slate-400">{t('noPlayers')}</p>
+      ) : (
+        <div className="flex flex-col flex-wrap items-start gap-2 md:flex-row">
+          {players.map((player) => (
+            <PlayerCard key={player.id} player={player} />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function PlayerCard({ player }: { player: Player }) {
+  const [name, setName] = useState(player.name)
+  const detachPlayer = useDetachPlayer()
+  const updatePlayer = useUpdatePlayer()
+  const { t: tActions } = useTranslation('common', { keyPrefix: 'actions' })
+  const [editing, setEditing] = useState(false)
+
+  const handleSave = () => {
+    if (!name.trim()) return
+    updatePlayer.mutate(
+      { id: player.id, name: name.trim() },
+      { onSuccess: () => setEditing(false) },
+    )
+  }
+
+  if (editing) {
+    return (
+      <div className="flex w-full min-w-full flex-wrap items-center justify-between space-y-4 rounded-xl border border-slate-700 bg-slate-800 px-4 py-2 md:min-w-1/3 md:flex-1 lg:min-w-1/4">
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="ffocus:border-uno-red w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-center font-mono text-white focus:outline-none"
+        />
+        <div className="flex flex-1 gap-2">
+          <button
+            onClick={() => setEditing(false)}
+            className="flex-1 rounded-lg border border-slate-600 py-2 text-sm text-slate-400 hover:text-white"
+          >
+            {tActions('cancel')}
+          </button>
+          <button
+            onClick={handleSave}
+            disabled={updatePlayer.isPending}
+            className="bg-uno-red flex-1 rounded-lg py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
+          >
+            {tActions('save')}
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex w-full min-w-full items-center justify-between rounded-xl border border-slate-700 bg-slate-800 px-4 py-2.5 md:min-w-1/3 md:flex-1 lg:min-w-1/4">
+      <div className="flex items-center gap-3">
+        <p className="leading-tight font-medium">{name}</p>
+      </div>
+      <div className="flex items-center gap-3">
+        <button
+          onClick={() => setEditing(true)}
+          className="text-xs text-slate-400 hover:text-white"
+        >
+          {tActions('edit')}
+        </button>
+        <button
+          onClick={() => detachPlayer.mutate(player.id)}
+          disabled={detachPlayer.isPending}
+          className="text-xs text-red-400 hover:text-red-300 disabled:opacity-50"
+        >
+          {tActions('delete')}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+export function PartiesPage() {
+  return (
+    <div className="space-y-4">
+      <PartyBlock />
+      <PlayersBlock />
     </div>
   )
 }

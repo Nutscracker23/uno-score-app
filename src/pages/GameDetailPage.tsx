@@ -146,6 +146,8 @@ function RoundRow({
   const [score, setScore] = useState(String(round.score))
   const updateRound = useUpdateRound(gameId)
   const deleteRound = useDeleteRound(gameId)
+  const { t: tActions } = useTranslation('common', { keyPrefix: 'actions' })
+  const { t } = useTranslation('game')
 
   const winnerName = standings.find((s) => s.player_id === round.winner_id)?.name ?? '?'
 
@@ -156,8 +158,6 @@ function RoundRow({
     )
   }
 
-  const { t: tActions } = useTranslation('common', { keyPrefix: 'actions' })
-
   if (editing) {
     return (
       <div className="space-y-3 border-t border-slate-700 px-4 py-3">
@@ -166,7 +166,7 @@ function RoundRow({
             <button
               key={s.player_id}
               onClick={() => setWinnerId(s.player_id)}
-              className={`rounded-full px-3 py-1 text-sm ${
+              className={`rounded-full px-3 py-1.5 text-sm ${
                 winnerId === s.player_id
                   ? 'bg-uno-red text-white'
                   : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
@@ -181,19 +181,19 @@ function RoundRow({
           inputMode="numeric"
           value={score}
           onChange={(e) => setScore(e.target.value)}
-          className="focus:border-uno-red w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-1.5 text-center font-mono text-white focus:outline-none"
+          className="focus:border-uno-red w-full rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-center font-mono text-white focus:outline-none"
         />
         <div className="flex gap-2">
           <button
             onClick={() => setEditing(false)}
-            className="flex-1 rounded-lg border border-slate-600 py-1.5 text-sm text-slate-400 hover:text-white"
+            className="flex-1 rounded-lg border border-slate-600 py-2 text-sm text-slate-400 hover:text-white"
           >
             {tActions('cancel')}
           </button>
           <button
             onClick={handleSave}
             disabled={updateRound.isPending}
-            className="bg-uno-red flex-1 rounded-lg py-1.5 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
+            className="bg-uno-red flex-1 rounded-lg py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
           >
             {tActions('save')}
           </button>
@@ -203,26 +203,31 @@ function RoundRow({
   }
 
   return (
-    <tr className="border-t border-slate-700">
-      <td className="px-4 py-2 text-slate-400">{round.round_number}</td>
-      <td className="px-4 py-2 font-medium">{winnerName}</td>
-      <td className="px-4 py-2 text-right font-mono">{round.score}</td>
-      <td className="px-4 py-2 text-right">
+    <div className="flex items-center justify-between border-t border-slate-700 px-4 py-2.5">
+      <div className="flex items-center gap-3">
+        <span className="text-xs text-slate-500">#{round.round_number}</span>
+        <div>
+          <p className="leading-tight font-medium">{winnerName}</p>
+          <p className="text-xs text-slate-400">{t('roundRowPoints', { count: round.score })}</p>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-3">
         <button
           onClick={() => setEditing(true)}
-          className="mr-2 text-xs text-slate-400 hover:text-white"
+          className="text-xs text-slate-400 hover:text-white"
         >
-          {tActions('editShort')}
+          {tActions('edit')}
         </button>
         <button
           onClick={() => deleteRound.mutate(round.id)}
           disabled={deleteRound.isPending}
           className="text-xs text-red-400 hover:text-red-300 disabled:opacity-50"
         >
-          {tActions('deleteShort')}
+          {tActions('delete')}
         </button>
-      </td>
-    </tr>
+      </div>
+    </div>
   )
 }
 
@@ -235,29 +240,15 @@ function RoundsHistory({
   gameId: string
   standings: Standing[]
 }) {
-  const { t } = useTranslation('game')
-
   if (!rounds.length) return null
 
   return (
-    <div className="overflow-hidden rounded-xl border border-slate-700">
-      <table className="w-full text-sm">
-        <thead className="bg-slate-800">
-          <tr>
-            <th className="px-4 py-2 text-left font-medium text-slate-400">{t('round')}</th>
-            <th className="px-4 py-2 text-left font-medium text-slate-400">{t('winner')}</th>
-            <th className="px-4 py-2 text-right font-medium text-slate-400">{t('score')}</th>
-            <th className="px-4 py-2 text-right font-medium text-slate-400"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {[...rounds]
-            .sort((a, b) => b.round_number - a.round_number)
-            .map((round) => (
-              <RoundRow key={round.id} round={round} gameId={gameId} standings={standings} />
-            ))}
-        </tbody>
-      </table>
+    <div className="overflow-hidden rounded-xl border border-slate-700 bg-slate-800">
+      {[...rounds]
+        .sort((a, b) => b.round_number - a.round_number)
+        .map((round) => (
+          <RoundRow key={round.id} round={round} gameId={gameId} standings={standings} />
+        ))}
     </div>
   )
 }
