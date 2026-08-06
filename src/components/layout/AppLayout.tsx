@@ -30,7 +30,7 @@ export function AppLayout() {
           <nav className="flex items-center gap-4">
             {navLink('/', tNav('game'))}
             {navLink('/history', tNav('history'))}
-            {navLink('/parties', tNav('parties'))}
+            {navLink('/players', tNav('players'))}
             <button onClick={logout} className="text-sm text-slate-400 hover:text-white">
               {user?.first_name ?? user?.email ?? 'Exit'}
             </button>

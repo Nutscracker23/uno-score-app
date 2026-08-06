@@ -48,7 +48,7 @@ export function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/games/:id" element={<GameDetailPage />} />
                 <Route path="/history" element={<HistoryPage />} />
-                <Route path="/parties" element={<PartiesPage />} />
+                <Route path="/players" element={<PartiesPage />} />
               </Route>
             </Route>
           </Routes>

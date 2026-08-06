@@ -2,7 +2,8 @@
   "nav": {
     "game": "Game",
     "history": "History",
-    "parties": "Parties"
+    "parties": "Parties",
+    "players": "Players"
   },
   "actions": {
     "save": "Save",

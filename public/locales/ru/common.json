@@ -2,7 +2,8 @@
   "nav": {
     "game": "Игра",
     "history": "История",
-    "parties": "Пати"
+    "parties": "Пати",
+    "players": "Игроки"
   },
   "actions": {
     "save": "Сохранить",
