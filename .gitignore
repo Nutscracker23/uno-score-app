@@ -6,3 +6,9 @@ dev-dist
 .idea
 .ai
 .nvmrc
+.codegraph/
+.codex
+tmp/
+temp/
+
+AGENTS.md

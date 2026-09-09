@@ -1,0 +1,11 @@
+{
+  "title": "Гравці та компанії",
+  "newParty": "Нова компанія",
+  "partyName": "Назва компанії",
+  "players": "Гравці",
+  "newPlayerName": "Ім’я нового гравця",
+  "playersCount": "Гравців: {{count}}",
+  "noPlayers": "Немає гравців",
+  "loading": "Завантаження…",
+  "noParties": "Компаній ще немає"
+}

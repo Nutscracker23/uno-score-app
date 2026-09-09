@@ -1,0 +1,16 @@
+.git
+.DS_Store
+.env
+.env.*
+!.env.example
+node_modules
+dist
+dev-dist
+.idea
+.codegraph
+.agents
+README.md
+*.pem
+*.key
+
+AGENTS.md
